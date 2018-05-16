@@ -31,7 +31,7 @@ TicketManager.init(config)
 CronManager.init(config)
 
 server.post('/api/ticket/new', async (req, res) => {
-  const { amount } = req.body
+  const amount = parseInt(req.body.amount)
   if (amount == null) return res.json({ success: false })
   const ticket = await TicketManager.create(amount)
   res.json(ticket)
