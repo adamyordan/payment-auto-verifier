@@ -9,7 +9,7 @@ function init(config) {
 
 async function getAllPossibleUniqueCodes() {
   const arr = []
-  for (let i = 0; i < 10 * uniqueCodeNumbers; i++) arr.push(i)
+  for (let i = 0; i < 10 ** uniqueCodeNumbers; i++) arr.push(i)
   return arr
 }
 
