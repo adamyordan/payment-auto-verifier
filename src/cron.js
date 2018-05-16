@@ -12,6 +12,12 @@ function init(config) {
       console.log('[+] [CRON] Refreshed payments...');
     });  
   }
+
+  cron.schedule('*/5 * * * *', async () => {
+    console.log('[+] [CRON] Checking expired tickets')
+    await TicketManager.checkExpired()
+    console.log('[+] [CRON] Checked expired tickets')
+  });
 }
 
 module.exports = { init }

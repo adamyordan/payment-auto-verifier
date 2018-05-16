@@ -46,4 +46,17 @@ async function markPaid(id) {
   return ticket.save()
 }
 
-module.exports = { init, refresh, get, create, markPaid }
+async function checkExpired() {
+  console.log('[+] checking expired tickets')
+  const activeTickets = await Ticket.find({ active: true })
+  for (let ticket of activeTickets) {
+    if (ticket.expiredTime < new Date().getTime()) {
+      console.log('[+] found expired ticket: ' + ticket.id)
+      ticket.active = false
+      ticket.save()
+    }
+  }
+  console.log('[+] checked expired tickets')
+}
+
+module.exports = { init, refresh, get, create, markPaid, checkExpired }
