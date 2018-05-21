@@ -6,6 +6,7 @@ module.exports = {
     uniqueCode: {},
     paid: {},
     active: {},
+    createdTime: {},
     expiredTime: {},
     paymentTime: {},
   }),

@@ -52,7 +52,7 @@ async function markIrrelevantAsRecognized() {
       || record.partnerName == 'Interest'
       || record.partnerName == 'Tax on Interest'
     ) {
-      console.log('[+] marked recognized irrelevant history: ' + id)
+      console.log('[+] marked recognized irrelevant history: ' + record.id)
       record.recognized = true
       result.push(record.save())
     }

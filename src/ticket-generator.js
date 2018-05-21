@@ -40,7 +40,8 @@ async function generateNewTicket(amount) {
     uniqueCode,
     paid: false,
     active: true,
-    expiredTime: moment().add(1, 'day')
+    expiredTime: moment().add(1, 'day'),
+    createdTime: moment()
   })
   const savedTicket = await ticket.save()
   return savedTicket

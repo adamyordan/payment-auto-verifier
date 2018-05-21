@@ -12,7 +12,9 @@ async function refresh(unrecognizedHistory, markRecognized) {
 
   unrecognizedHistory.forEach(async record => {
     console.log('[+] finding ticket for ' + record.amount)
-    const matchedTicket = activeTickets.find(t => t.amount == record.amount)
+    const matchedTicket = activeTickets.find(t => {
+      return t.amount == record.amount && moment(record.createdAt) > moment(t.createdTime)
+    })
     if (matchedTicket != null) {
       console.log('[+] found ticket for ' + record.amount)
       console.log('[+] updating ticket for ' + record.amount)
