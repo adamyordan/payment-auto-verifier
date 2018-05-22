@@ -1,6 +1,7 @@
 const moment = require('moment')
 const TicketGenerator = require('./ticket-generator')
 const { Ticket } = require('./models')
+const Callback = require('./callback')
 
 function init(config) {
   TicketGenerator.init(config)
@@ -24,6 +25,7 @@ async function refresh(unrecognizedHistory, markRecognized) {
       await matchedTicket.save()
       await markRecognized(record._id)
       console.log('[+] updated ticket for ' + record.amount)
+      Callback.call(matchedTicket._id)
     }
   });
   console.log('[+] checked bank payments')
@@ -45,7 +47,9 @@ async function markPaid(id) {
   ticket.paid = true
   ticket.active = false
   ticket.paymentTime = moment()
-  return ticket.save()
+  const savedTicket = await ticket.save()
+  Callback.call(savedTicket._id)
+  return savedTicket
 }
 
 async function checkExpired() {

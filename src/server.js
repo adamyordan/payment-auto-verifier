@@ -6,6 +6,7 @@ const HistoryManager = require('./history-manager')
 const TicketManager = require('./ticket-manager')
 const { Ticket } = require('./models')
 const CronManager = require('./cron')
+const Callback = require('./callback')
 
 const config = {
   uniqueCodeNumbers: process.env.UNIQUE_CODE_NUMBERS || 3,
@@ -20,6 +21,11 @@ const config = {
   cron: {
     enabled: process.env.ENABLE_SCHEDULER == 'true',
     refreshSchedule: process.env.REFRESH_SCHEDULE
+  },
+  callback: {
+    enabled: process.env.WEBHOOK_ENABLED == 'true',
+    url: process.env.WEBHOOK_CALLBACK_URL,
+    key: process.env.WEBHOOK_KEY
   }
 }
 
@@ -29,6 +35,7 @@ mongoose.connect(process.env.MONGO_URL)
 HistoryManager.init(config)
 TicketManager.init(config)
 CronManager.init(config)
+Callback.init(config)
 
 server.post('/api/ticket/new', async (req, res) => {
   const amount = parseInt(req.body.amount)
